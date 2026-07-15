@@ -6,6 +6,9 @@ import Rooms from "../components/Rooms";
 import Features from "../components/Features";
 import DashboardPreview from "../components/DashboardPreview";
 import CTA from "../components/CTA";
+import Testimonials from "../components/Testimonials";
+import Contact from "../components/Contact";
+import Footer from "../components/Footer";
 
 function Home() {
   return (
@@ -18,6 +21,9 @@ function Home() {
       <Features />
       <DashboardPreview />
       <CTA />
+      <Testimonials />
+      <Contact />
+      <Footer />
     </>
   );
 }
