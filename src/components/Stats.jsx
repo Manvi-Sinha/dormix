@@ -1,41 +1,74 @@
+import {
+  FaUsers,
+  FaBed,
+  FaSmile,
+  FaHeadset,
+} from "react-icons/fa";
+
 function Stats() {
   const stats = [
     {
-      number: "10K+",
-      title: "Students Managed",
+      icon: <FaUsers size={35} />,
+      number: "500+",
+      title: "Students",
     },
     {
-      number: "150+",
-      title: "Hostels & PGs",
+      icon: <FaBed size={35} />,
+      number: "80+",
+      title: "Rooms",
     },
     {
-      number: "98%",
-      title: "Occupancy Rate",
+      icon: <FaSmile size={35} />,
+      number: "99%",
+      title: "Satisfied Residents",
     },
     {
+      icon: <FaHeadset size={35} />,
       number: "24/7",
       title: "Support",
     },
   ];
 
   return (
-    <section className="bg-slate-950 text-white py-24">
-      <div className="max-w-7xl mx-auto px-8">
+    <section className="bg-slate-50 py-24">
+      <div className="max-w-[1400px] mx-auto px-8">
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        {/* Heading */}
+
+        <div className="text-center">
+
+          <h2 className="text-4xl font-bold text-slate-900">
+            Our Impact
+          </h2>
+
+          <p className="text-gray-500 mt-4 text-lg">
+            Trusted by students and hostel owners across the country.
+          </p>
+
+        </div>
+
+        {/* Cards */}
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
 
           {stats.map((stat) => (
             <div
               key={stat.title}
-              className="bg-slate-900 rounded-2xl p-8 text-center border border-slate-800 hover:border-blue-500 transition"
+              className="bg-white rounded-3xl p-10 text-center shadow-sm hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
             >
-              <h2 className="text-5xl font-bold text-blue-500">
-                {stat.number}
-              </h2>
 
-              <p className="mt-4 text-gray-400">
+              <div className="flex justify-center text-blue-600">
+                {stat.icon}
+              </div>
+
+              <h3 className="mt-6 text-5xl font-bold text-slate-900">
+                {stat.number}
+              </h3>
+
+              <p className="mt-3 text-gray-500 font-medium">
                 {stat.title}
               </p>
+
             </div>
           ))}
 

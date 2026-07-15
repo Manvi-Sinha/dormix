@@ -1,68 +1,72 @@
+import heroImage from "../assets/images/hero.jpg";
+
 function Hero() {
   return (
-    <section className="bg-slate-950 text-white">
-      <div className="max-w-7xl mx-auto px-8 py-24 grid lg:grid-cols-2 gap-16 items-center">
+    <section className="bg-white">
+      <div className="max-w-[1400px] mx-auto px-8 pt-4 pb-12 grid lg:grid-cols-2 gap-16 items-center min-h-[85vh]">
 
-        {/* LEFT COLUMN */}
+        {/* Left Content */}
         <div>
 
-          <span className="inline-block bg-blue-600/20 text-blue-400 px-4 py-2 rounded-full text-sm font-medium">
-            Smart Hostel/PG Management Platform
+          <span className="inline-block bg-blue-100 text-blue-700 px-5 py-2 rounded-full font-medium">
+            Smart Hostel & PG Management Platform
           </span>
 
-          <h1 className="mt-6 text-5xl font-bold leading-tight">
-            Modern Hostel & PG
+          <h1 className="mt-6 text-6xl font-bold leading-tight text-slate-900">
+            Find Your Perfect
             <br />
-            Management, Simplified.
+            Hostel & PG Stay
           </h1>
 
-          <p className="mt-6 text-lg text-gray-400 max-w-2xl">
-            Manage bookings, students, rooms, fees, complaints,
-            visitor records and documents from one powerful platform.
+          <p className="mt-6 text-xl text-gray-600 leading-8">
+            Discover safe, affordable and comfortable accommodation while
+            hostel owners manage everything from one smart platform.
           </p>
 
-          <div className="mt-8 flex gap-4">
+          <div className="mt-10 flex gap-5">
 
-  <button className="bg-blue-600 hover:bg-blue-700 transition px-8 py-3 rounded-full font-medium">
-    Get Started
-  </button>
+            <button className="bg-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-700 transition-all duration-300 shadow-lg">
+              Explore Rooms
+            </button>
 
-  <button className="border border-gray-600 hover:border-blue-500 hover:text-blue-400 transition px-8 py-3 rounded-full font-medium">
-    Explore Features
-  </button>
+            <button className="border-2 border-blue-600 text-blue-600 px-8 py-4 rounded-full font-semibold hover:bg-blue-50 transition-all duration-300">
+              Contact Us
+            </button>
 
-</div>
+          </div>
+
+          <div className="mt-12 flex gap-12">
+
+            <div>
+              <h2 className="text-3xl font-bold text-blue-600">500+</h2>
+              <p className="text-gray-500">Students</p>
+            </div>
+
+            <div>
+              <h2 className="text-3xl font-bold text-blue-600">80+</h2>
+              <p className="text-gray-500">Rooms</p>
+            </div>
+
+            <div>
+              <h2 className="text-3xl font-bold text-blue-600">24/7</h2>
+              <p className="text-gray-500">Support</p>
+            </div>
+
+          </div>
 
         </div>
 
-        {/* RIGHT COLUMN */}
-        <div className="bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-2xl">
+        {/* Right Image */}
 
-  <h3 className="text-2xl font-semibold">
-    Dormix Dashboard
-  </h3>
+        <div className="flex justify-center">
 
-  <p className="text-gray-400 mt-2">
-    Live Overview
-  </p>
+          <img
+            src={heroImage}
+            alt="Dormix Hostel"
+            className="w-full max-w-[600px] h-[500px] object-cover rounded-3xl shadow-2xl"
+          />
 
-  <div className="mt-8 space-y-4">
-
-    <div className="bg-slate-800 rounded-xl p-4">
-      👥 Students : 248
-    </div>
-
-    <div className="bg-slate-800 rounded-xl p-4">
-      🛏️ Rooms Occupied : 92%
-    </div>
-
-    <div className="bg-slate-800 rounded-xl p-4">
-      📝 Pending Complaints : 7
-    </div>
-
-  </div>
-
-</div>
+        </div>
 
       </div>
     </section>
