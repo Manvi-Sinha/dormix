@@ -1,28 +1,22 @@
 function CTA() {
   return (
     <section className="bg-blue-600 py-24">
-      <div className="max-w-5xl mx-auto px-8 text-center">
+      <div className="max-w-5xl mx-auto px-8 text-center text-white">
 
-        <h2 className="text-5xl font-bold text-white">
-          Ready to Modernize Your Hostel/PG?
+        <h2 className="text-5xl font-bold">
+          Ready to Transform
+          <br />
+          Your Hostel Management?
         </h2>
 
-        <p className="text-blue-100 mt-6 text-lg">
-          Join Dormix and simplify room bookings, fee tracking,
-          complaints, visitors and more.
+        <p className="mt-6 text-xl text-blue-100 max-w-3xl mx-auto">
+          Join hundreds of students and hostel owners using Dormix to simplify
+          bookings, payments, complaints and daily operations.
         </p>
 
-        <div className="mt-10 flex justify-center gap-4">
-
-          <button className="bg-white text-blue-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition">
-            Get Started
-          </button>
-
-          <button className="border border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-blue-600 transition">
-            Contact Us
-          </button>
-
-        </div>
+        <button className="mt-10 bg-white text-blue-600 px-10 py-4 rounded-full font-semibold text-lg hover:bg-slate-100 transition-all duration-300 shadow-lg">
+          Get Started Today
+        </button>
 
       </div>
     </section>

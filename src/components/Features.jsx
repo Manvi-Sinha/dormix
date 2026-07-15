@@ -2,57 +2,86 @@ import {
   FaBed,
   FaMoneyBillWave,
   FaClipboardList,
+  FaFileAlt,
   FaUserFriends,
+  FaBell,
 } from "react-icons/fa";
 
 function Features() {
+  const features = [
+    {
+      icon: <FaBed />,
+      title: "Room Booking",
+      desc: "Students can easily browse and reserve available rooms online.",
+    },
+    {
+      icon: <FaMoneyBillWave />,
+      title: "Fee Tracking",
+      desc: "Track fee payments, due dates and payment history digitally.",
+    },
+    {
+      icon: <FaClipboardList />,
+      title: "Complaint Management",
+      desc: "Raise and resolve complaints without paperwork.",
+    },
+    {
+      icon: <FaFileAlt />,
+      title: "Digital Documents",
+      desc: "Store important hostel documents securely in one place.",
+    },
+    {
+      icon: <FaUserFriends />,
+      title: "Visitor Management",
+      desc: "Maintain visitor records with quick check-in and check-out.",
+    },
+    {
+      icon: <FaBell />,
+      title: "Notifications",
+      desc: "Receive instant announcements and important updates.",
+    },
+  ];
+
   return (
-    <section className="bg-slate-950 text-white py-24">
-      <div className="max-w-7xl mx-auto px-8">
+    <section className="bg-slate-50 py-24">
+      <div className="max-w-[1400px] mx-auto px-8">
 
         <div className="text-center">
-          <h2 className="text-4xl font-bold">
+
+          <span className="text-blue-600 font-semibold uppercase tracking-wider">
+            Features
+          </span>
+
+          <h2 className="mt-4 text-5xl font-bold text-slate-900">
             Everything You Need
           </h2>
 
-          <p className="text-gray-400 mt-4">
-            Manage every aspect of your Hostel/PG from one powerful platform.
+          <p className="mt-6 text-lg text-gray-600 max-w-2xl mx-auto">
+            Dormix provides every tool needed to simplify hostel and PG
+            management for students and administrators.
           </p>
+
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mt-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
 
-          <div className="bg-slate-900 rounded-2xl p-6 hover:-translate-y-2 hover:bg-slate-800 transition duration-300">
-            <FaBed className="text-4xl text-blue-500 mb-5" />
-            <h3 className="text-xl font-semibold">Room Booking</h3>
-            <p className="text-gray-400 mt-3">
-              Book and manage hostel rooms with ease.
-            </p>
-          </div>
+          {features.map((feature) => (
+            <div
+              key={feature.title}
+              className="bg-white rounded-3xl p-8 shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-300"
+            >
+              <div className="w-16 h-16 rounded-2xl bg-blue-100 flex items-center justify-center text-blue-600 text-3xl">
+                {feature.icon}
+              </div>
 
-          <div className="bg-slate-900 rounded-2xl p-6 hover:-translate-y-2 hover:bg-slate-800 transition duration-300">
-            <FaMoneyBillWave className="text-4xl text-blue-500 mb-5" />
-            <h3 className="text-xl font-semibold">Fee Tracking</h3>
-            <p className="text-gray-400 mt-3">
-              Monitor payments, dues and receipts.
-            </p>
-          </div>
+              <h3 className="mt-6 text-2xl font-bold text-slate-900">
+                {feature.title}
+              </h3>
 
-          <div className="bg-slate-900 rounded-2xl p-6 hover:-translate-y-2 hover:bg-slate-800 transition duration-300">
-            <FaClipboardList className="text-4xl text-blue-500 mb-5" />
-            <h3 className="text-xl font-semibold">Complaints</h3>
-            <p className="text-gray-400 mt-3">
-              Track and resolve complaints efficiently.
-            </p>
-          </div>
-
-          <div className="bg-slate-900 rounded-2xl p-6 hover:-translate-y-2 hover:bg-slate-800 transition duration-300">
-            <FaUserFriends className="text-4xl text-blue-500 mb-5" />
-            <h3 className="text-xl font-semibold">Visitor Management</h3>
-            <p className="text-gray-400 mt-3">
-              Maintain secure visitor records and history.
-            </p>
-          </div>
+              <p className="mt-4 text-gray-600 leading-7">
+                {feature.desc}
+              </p>
+            </div>
+          ))}
 
         </div>
 

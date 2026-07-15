@@ -3,6 +3,9 @@ import Hero from "../components/Hero";
 import Stats from "../components/Stats";
 import About from "../components/About";
 import Rooms from "../components/Rooms";
+import Features from "../components/Features";
+import DashboardPreview from "../components/DashboardPreview";
+import CTA from "../components/CTA";
 
 function Home() {
   return (
@@ -12,6 +15,9 @@ function Home() {
       <Stats />
       <About />
       <Rooms />
+      <Features />
+      <DashboardPreview />
+      <CTA />
     </>
   );
 }
