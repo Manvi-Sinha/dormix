@@ -6,7 +6,7 @@ import {
 
 function Contact() {
   return (
-    <section className="bg-white py-24">
+    <section id="contact" className="bg-white py-24">
       <div className="max-w-[1400px] mx-auto px-8">
 
         <div className="text-center">

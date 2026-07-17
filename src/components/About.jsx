@@ -3,7 +3,7 @@ import aboutImage from "../assets/images/pic1.jpg";
 
 function About() {
   return (
-    <section className="bg-slate-50 py-24">
+    <section id="about" className="bg-slate-50 py-24">
       <div className="max-w-[1400px] mx-auto px-8 grid lg:grid-cols-2 gap-20 items-center">
 
         {/* Left Image */}

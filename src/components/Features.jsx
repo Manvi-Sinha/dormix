@@ -42,7 +42,7 @@ function Features() {
   ];
 
   return (
-    <section className="bg-slate-50 py-24">
+    <section id="features" className="bg-slate-50 py-24">
       <div className="max-w-[1400px] mx-auto px-8">
 
         <div className="text-center">
