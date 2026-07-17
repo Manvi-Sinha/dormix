@@ -13,59 +13,67 @@ import NoticeCard from "../../components/dashboard/NoticeCard";
 
 function DashboardHome() {
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
 
       {/* Welcome */}
 
       <WelcomeCard />
 
-      {/* Statistics */}
+      {/* Stats */}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+      <section className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
 
         <StatCard
           title="Room Number"
           value="A-204"
           icon={<FaBed />}
-          color="bg-blue-600"
+          color="#2563EB"
         />
 
         <StatCard
           title="Pending Fee"
-          value="₹5,000"
+          value="₹8,500"
           icon={<FaMoneyBillWave />}
-          color="bg-green-600"
+          color="#16A34A"
         />
 
         <StatCard
           title="Complaints"
           value="2"
           icon={<FaClipboardList />}
-          color="bg-orange-500"
+          color="#F97316"
         />
 
         <StatCard
           title="Attendance"
           value="96%"
           icon={<FaChartLine />}
-          color="bg-purple-600"
+          color="#9333EA"
         />
 
-      </div>
+      </section>
 
-      {/* Room & Fee */}
+      {/* Room + Fee */}
 
-      <div className="grid lg:grid-cols-2 gap-6">
+      <section className="grid grid-cols-1 xl:grid-cols-2 gap-6 items-stretch">
 
-        <RoomCard />
+        <div className="h-full">
+          <RoomCard />
+        </div>
 
-        <FeeCard />
+        <div className="h-full">
+          <FeeCard />
+        </div>
 
-      </div>
+      </section>
 
       {/* Notices */}
 
-      <NoticeCard />
+      <section>
+
+        <NoticeCard />
+
+      </section>
 
     </div>
   );

@@ -1,150 +1,135 @@
 import {
   FaBed,
   FaBuilding,
-  FaDoorOpen,
   FaLayerGroup,
   FaUserTie,
   FaPhoneAlt,
+  FaCheckCircle,
 } from "react-icons/fa";
 
 function RoomCard() {
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+    <div className="bg-white border border-slate-200 rounded-2xl shadow-sm p-6">
 
-      {/* Heading */}
+      {/* Header */}
 
-      <div className="flex items-center gap-3 mb-6">
-
-        <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-
-          <FaBed className="text-blue-600 text-xl" />
-
-        </div>
+      <div className="flex items-center justify-between mb-6">
 
         <div>
-
-          <h2 className="text-2xl font-bold text-slate-800">
+          <h2 className="text-xl font-semibold text-slate-800">
             Room Details
           </h2>
 
-          <p className="text-gray-500 text-sm">
-            Your allocated hostel room information
+          <p className="text-sm text-slate-500 mt-1">
+            Your current hostel allocation
           </p>
-
         </div>
+
+        <span className="flex items-center gap-2 bg-green-100 text-green-700 text-xs font-medium px-3 py-1.5 rounded-full">
+          <FaCheckCircle className="text-[10px]" />
+          Active
+        </span>
 
       </div>
 
       {/* Details */}
 
-      <div className="grid md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-        <div className="bg-slate-50 rounded-xl p-4">
+        <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="w-12 h-12 rounded-xl bg-[#C8D9E6] flex items-center justify-center text-blue-700">
+            <FaBed />
+          </div>
 
-          <div className="flex items-center gap-3">
-
-            <FaDoorOpen className="text-blue-600" />
-
-            <span className="text-gray-600">
+          <div>
+            <p className="text-xs text-slate-500">
               Room Number
-            </span>
+            </p>
 
+            <h3 className="text-base font-semibold text-slate-800">
+              A-204
+            </h3>
           </div>
-
-          <h3 className="text-xl font-bold mt-2">
-            A-204
-          </h3>
-
         </div>
 
-        <div className="bg-slate-50 rounded-xl p-4">
+        <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="w-12 h-12 rounded-xl bg-[#C8D9E6] flex items-center justify-center text-blue-700">
+            <FaBed />
+          </div>
 
-          <div className="flex items-center gap-3">
-
-            <FaBed className="text-blue-600" />
-
-            <span className="text-gray-600">
+          <div>
+            <p className="text-xs text-slate-500">
               Bed Number
-            </span>
+            </p>
 
+            <h3 className="text-base font-semibold text-slate-800">
+              B-2
+            </h3>
           </div>
-
-          <h3 className="text-xl font-bold mt-2">
-            B-02
-          </h3>
-
         </div>
 
-        <div className="bg-slate-50 rounded-xl p-4">
+        <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="w-12 h-12 rounded-xl bg-[#C8D9E6] flex items-center justify-center text-blue-700">
+            <FaLayerGroup />
+          </div>
 
-          <div className="flex items-center gap-3">
-
-            <FaLayerGroup className="text-blue-600" />
-
-            <span className="text-gray-600">
+          <div>
+            <p className="text-xs text-slate-500">
               Floor
-            </span>
+            </p>
 
+            <h3 className="text-base font-semibold text-slate-800">
+              Second Floor
+            </h3>
           </div>
-
-          <h3 className="text-xl font-bold mt-2">
-            Second Floor
-          </h3>
-
         </div>
 
-        <div className="bg-slate-50 rounded-xl p-4">
+        <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="w-12 h-12 rounded-xl bg-[#C8D9E6] flex items-center justify-center text-blue-700">
+            <FaBuilding />
+          </div>
 
-          <div className="flex items-center gap-3">
-
-            <FaBuilding className="text-blue-600" />
-
-            <span className="text-gray-600">
+          <div>
+            <p className="text-xs text-slate-500">
               Block
-            </span>
+            </p>
 
+            <h3 className="text-base font-semibold text-slate-800">
+              Block A
+            </h3>
           </div>
-
-          <h3 className="text-xl font-bold mt-2">
-            Block A
-          </h3>
-
         </div>
 
-        <div className="bg-slate-50 rounded-xl p-4">
+        <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="w-12 h-12 rounded-xl bg-[#C8D9E6] flex items-center justify-center text-blue-700">
+            <FaUserTie />
+          </div>
 
-          <div className="flex items-center gap-3">
-
-            <FaUserTie className="text-blue-600" />
-
-            <span className="text-gray-600">
+          <div>
+            <p className="text-xs text-slate-500">
               Warden
-            </span>
+            </p>
 
+            <h3 className="text-base font-semibold text-slate-800">
+              Mr. Rajesh Kumar
+            </h3>
           </div>
-
-          <h3 className="text-xl font-bold mt-2">
-            Mr. Rajesh Kumar
-          </h3>
-
         </div>
 
-        <div className="bg-slate-50 rounded-xl p-4">
-
-          <div className="flex items-center gap-3">
-
-            <FaPhoneAlt className="text-blue-600" />
-
-            <span className="text-gray-600">
-              Contact
-            </span>
-
+        <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200">
+          <div className="w-12 h-12 rounded-xl bg-[#C8D9E6] flex items-center justify-center text-blue-700">
+            <FaPhoneAlt />
           </div>
 
-          <h3 className="text-xl font-bold mt-2">
-            +91 98765 43210
-          </h3>
+          <div>
+            <p className="text-xs text-slate-500">
+              Contact
+            </p>
 
+            <h3 className="text-base font-semibold text-slate-800">
+              +91 98765 43210
+            </h3>
+          </div>
         </div>
 
       </div>

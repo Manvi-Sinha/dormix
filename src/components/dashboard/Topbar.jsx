@@ -1,19 +1,19 @@
 import {
   FaBell,
-  FaSearch,
   FaChevronDown,
+  FaSearch,
 } from "react-icons/fa";
 
 function Topbar() {
   const today = new Date().toLocaleDateString("en-IN", {
     weekday: "long",
     day: "numeric",
-    month: "short",
+    month: "long",
     year: "numeric",
   });
 
   return (
-    <header className="h-20 bg-white border-b border-slate-200 px-8 flex items-center justify-between">
+    <header className="hidden lg:flex h-20 bg-white border-b border-slate-200 px-8 items-center justify-between sticky top-0 z-30">
 
       {/* Left */}
 
@@ -35,25 +35,25 @@ function Topbar() {
 
         {/* Search */}
 
-        <div className="hidden lg:block relative">
+        <div className="relative">
 
           <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
 
           <input
             type="text"
             placeholder="Search..."
-            className="w-72 rounded-xl border border-slate-300 bg-slate-50 pl-11 pr-4 py-2.5 text-sm outline-none focus:border-blue-500 focus:bg-white transition"
+            className="w-72 rounded-xl border border-slate-300 bg-slate-50 pl-11 pr-4 py-2.5 text-sm outline-none focus:border-blue-600 focus:bg-white transition"
           />
 
         </div>
 
-        {/* Notification */}
+        {/* Notifications */}
 
         <button className="relative w-11 h-11 rounded-xl bg-[#C8D9E6] hover:bg-slate-200 transition flex items-center justify-center">
 
           <FaBell className="text-slate-700" />
 
-          <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-red-500"></span>
+          <span className="absolute top-2 right-2 w-2.5 h-2.5 rounded-full bg-red-500"></span>
 
         </button>
 
@@ -65,7 +65,7 @@ function Topbar() {
             M
           </div>
 
-          <div className="hidden md:block text-left">
+          <div className="text-left">
 
             <h3 className="text-sm font-semibold text-slate-800">
               Manvi Sinha
@@ -77,7 +77,7 @@ function Topbar() {
 
           </div>
 
-          <FaChevronDown className="text-xs text-slate-500 hidden md:block" />
+          <FaChevronDown className="text-xs text-slate-500" />
 
         </button>
 

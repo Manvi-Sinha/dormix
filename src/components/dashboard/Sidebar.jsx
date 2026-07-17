@@ -9,44 +9,44 @@ import {
 } from "react-icons/fa";
 import { Link, useLocation } from "react-router-dom";
 
-function Sidebar() {
+function Sidebar({ closeSidebar }) {
   const location = useLocation();
 
   const menuItems = [
     {
       name: "Dashboard",
-      icon: <FaHome />,
       path: "/student-dashboard",
+      icon: <FaHome />,
     },
     {
       name: "Room",
-      icon: <FaBed />,
       path: "/student-dashboard/room",
+      icon: <FaBed />,
     },
     {
       name: "Fees",
-      icon: <FaMoneyBillWave />,
       path: "/student-dashboard/fees",
+      icon: <FaMoneyBillWave />,
     },
     {
       name: "Complaints",
-      icon: <FaClipboardList />,
       path: "/student-dashboard/complaints",
+      icon: <FaClipboardList />,
     },
     {
       name: "Notices",
-      icon: <FaBullhorn />,
       path: "/student-dashboard/notices",
+      icon: <FaBullhorn />,
     },
     {
       name: "Profile",
-      icon: <FaUser />,
       path: "/student-dashboard/profile",
+      icon: <FaUser />,
     },
   ];
 
   return (
-    <aside className="w-64 min-h-screen bg-white border-r border-slate-200 flex flex-col">
+    <aside className="w-72 h-screen bg-white border-r border-slate-200 flex flex-col shadow-sm">
 
       {/* Logo */}
 
@@ -54,9 +54,10 @@ function Sidebar() {
 
         <Link
           to="/"
+          onClick={closeSidebar}
           className="flex items-center gap-3"
         >
-          <div className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold text-xl">
+          <div className="w-12 h-12 rounded-2xl bg-[#C8D9E6] flex items-center justify-center text-xl font-bold text-blue-700">
             D
           </div>
 
@@ -73,41 +74,42 @@ function Sidebar() {
 
       </div>
 
-      {/* Navigation */}
+      {/* Menu */}
 
       <nav className="flex-1 px-4 py-6">
 
-        <p className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-4 px-3">
+        <p className="text-xs uppercase tracking-widest text-slate-400 mb-4 px-3">
           Main Menu
         </p>
 
-        <ul className="space-y-2">
+        <div className="space-y-2">
 
           {menuItems.map((item) => {
-            const active = location.pathname === item.path;
+            const active =
+              location.pathname === item.path;
 
             return (
-              <li key={item.name}>
-                <Link
-                  to={item.path}
-                  className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-medium transition-all duration-200
+              <Link
+                key={item.name}
+                to={item.path}
+                onClick={closeSidebar}
+                className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 text-sm font-medium
                   ${
                     active
-                      ? "bg-[#C8D9E6] text-slate-900 shadow-sm"
+                      ? "bg-[#C8D9E6] text-slate-900"
                       : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"
                   }`}
-                >
-                  <span className="text-base">
-                    {item.icon}
-                  </span>
+              >
+                <span className="text-base">
+                  {item.icon}
+                </span>
 
-                  {item.name}
-                </Link>
-              </li>
+                {item.name}
+              </Link>
             );
           })}
 
-        </ul>
+        </div>
 
       </nav>
 
@@ -115,7 +117,7 @@ function Sidebar() {
 
       <div className="border-t border-slate-200 p-4">
 
-        <button className="w-full flex items-center justify-center gap-3 rounded-xl bg-red-500 hover:bg-red-600 text-white py-3 text-sm font-medium transition">
+        <button className="w-full flex items-center justify-center gap-3 bg-red-500 hover:bg-red-600 text-white rounded-xl py-3 text-sm font-medium transition">
 
           <FaSignOutAlt />
 

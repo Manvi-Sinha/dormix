@@ -1,4 +1,4 @@
-import { FaCalendarAlt, FaArrowRight } from "react-icons/fa";
+import { FaArrowRight, FaCalendarAlt } from "react-icons/fa";
 
 function WelcomeCard() {
   const today = new Date().toLocaleDateString("en-IN", {
@@ -9,102 +9,64 @@ function WelcomeCard() {
   });
 
   return (
-    <div className="bg-gradient-to-r from-blue-700 via-blue-600 to-blue-500 rounded-3xl p-8 text-white shadow-xl">
+    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 flex flex-col lg:flex-row justify-between gap-6">
 
-      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
+      {/* Left Section */}
 
-        {/* Left Section */}
+      <div className="flex-1">
 
-        <div>
-
-          <p className="text-blue-100 text-sm flex items-center gap-2">
-
-            <FaCalendarAlt />
-
-            {today}
-
-          </p>
-
-          <h2 className="text-4xl font-bold mt-4">
-            Welcome Back, Manvi 👋
-          </h2>
-
-          <p className="mt-4 text-blue-100 leading-8 max-w-xl">
-            Here's a quick overview of your hostel information.
-            Check your room details, fee status, notices and
-            complaints from one place.
-          </p>
-
-          <button className="mt-8 bg-white text-blue-700 px-6 py-3 rounded-xl font-semibold flex items-center gap-3 hover:bg-blue-100 transition">
-
-            View Profile
-
-            <FaArrowRight />
-
-          </button>
-
+        <div className="inline-flex items-center gap-2 bg-[#C8D9E6] text-slate-700 text-xs font-medium px-3 py-1 rounded-full mb-4">
+          <FaCalendarAlt className="text-xs" />
+          {today}
         </div>
 
-        {/* Right Section */}
+        <h2 className="text-2xl font-semibold text-slate-800">
+          Welcome back, Manvi 👋
+        </h2>
 
-        <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 min-w-[260px]">
+        <p className="text-sm text-slate-500 mt-3 leading-6 max-w-xl">
+          Here's a quick overview of your hostel information. Stay updated with
+          your room details, fee status, notices, and complaints—all in one
+          place.
+        </p>
 
-          <h3 className="text-xl font-semibold mb-5">
-            Quick Summary
+        <button className="mt-6 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-5 py-3 rounded-xl transition">
+          View Profile
+          <FaArrowRight className="text-xs" />
+        </button>
+
+      </div>
+
+      {/* Right Section */}
+
+      <div className="grid grid-cols-2 gap-4 lg:w-80">
+
+        <div className="rounded-xl bg-slate-50 border border-slate-200 p-4">
+          <p className="text-xs text-slate-500">Room</p>
+          <h3 className="text-xl font-semibold text-slate-800 mt-1">
+            A-204
           </h3>
+        </div>
 
-          <div className="space-y-4">
+        <div className="rounded-xl bg-slate-50 border border-slate-200 p-4">
+          <p className="text-xs text-slate-500">Floor</p>
+          <h3 className="text-xl font-semibold text-slate-800 mt-1">
+            2nd
+          </h3>
+        </div>
 
-            <div className="flex justify-between">
+        <div className="rounded-xl bg-slate-50 border border-slate-200 p-4">
+          <p className="text-xs text-slate-500">Pending Fee</p>
+          <h3 className="text-xl font-semibold text-red-500 mt-1">
+            ₹8,500
+          </h3>
+        </div>
 
-              <span className="text-blue-100">
-                Room
-              </span>
-
-              <span className="font-semibold">
-                A-204
-              </span>
-
-            </div>
-
-            <div className="flex justify-between">
-
-              <span className="text-blue-100">
-                Hostel
-              </span>
-
-              <span className="font-semibold">
-                Dormix Boys Hostel
-              </span>
-
-            </div>
-
-            <div className="flex justify-between">
-
-              <span className="text-blue-100">
-                Fee Status
-              </span>
-
-              <span className="text-green-300 font-semibold">
-                Paid
-              </span>
-
-            </div>
-
-            <div className="flex justify-between">
-
-              <span className="text-blue-100">
-                Complaints
-              </span>
-
-              <span className="font-semibold">
-                1 Active
-              </span>
-
-            </div>
-
-          </div>
-
+        <div className="rounded-xl bg-slate-50 border border-slate-200 p-4">
+          <p className="text-xs text-slate-500">Complaints</p>
+          <h3 className="text-xl font-semibold text-slate-800 mt-1">
+            1 Active
+          </h3>
         </div>
 
       </div>
