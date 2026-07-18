@@ -28,8 +28,9 @@ const studentSchema = new mongoose.Schema(
     },
 
     room: {
-      type: String,
-      required: true,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Room",
+      default: null,
     },
 
     course: {

@@ -4,7 +4,19 @@
 
 Frontend Completed ✅
 
-Backend Not Started ⏳
+Backend In Progress 🚧
+
+### Backend Progress
+
+- ✅ Express Server
+- ✅ MongoDB Atlas Connection
+- ✅ Admin Authentication (Register/Login)
+- ✅ JWT Authentication
+- ✅ Protected Routes
+- ✅ Student CRUD
+- ✅ Room CRUD
+- ✅ Global Error Handling
+- 🚧 Student ↔ Room Relationship (Next)
 
 ---
 
@@ -18,11 +30,11 @@ Backend Not Started ⏳
 - React Router DOM
 - React Icons
 
-## Backend (Planned)
+## Backend
 
 - Node.js
 - Express.js
-- MongoDB
+- MongoDB Atlas
 - Mongoose
 - JWT
 - bcrypt
@@ -40,8 +52,8 @@ Accent Color
 
 Used for
 
-- Active sidebar
-- Icon backgrounds
+- Active Sidebar
+- Icon Backgrounds
 - Cards
 - Buttons
 - Highlights
@@ -49,6 +61,8 @@ Used for
 ---
 
 # Project Structure
+
+frontend/
 
 src/
 
@@ -89,28 +103,58 @@ routes/
 
 - AppRoutes.jsx
 
+backend/
+
+config/
+
+controllers/
+
+middleware/
+
+models/
+
+routes/
+
+utils/
+
+uploads/
+
+server.js
+
 ---
 
 # Student Module
 
-Completed
+Completed ✅
 
-- Login
+### Frontend
+
+- Login UI
 - Responsive Dashboard
 - Sidebar
 - Topbar
-- Dashboard Home
+- Dashboard
 - Room
 - Fees
 - Complaints
 - Notices
 - Profile
 
+### Backend
+
+- Create Student
+- Get All Students
+- Get Student By ID
+- Update Student
+- Delete Student
+
 ---
 
 # Admin Module
 
-Completed
+Completed ✅
+
+### Frontend
 
 - Responsive Layout
 - Sidebar
@@ -124,13 +168,34 @@ Completed
 - Wardens
 - Settings
 
+### Backend
+
+- Register Admin
+- Login Admin
+- JWT Authentication
+- Protected Profile Route
+
+---
+
+# Room Module
+
+Completed ✅
+
+### Backend
+
+- Create Room
+- Get All Rooms
+- Get Room By ID
+- Update Room
+- Delete Room
+
 ---
 
 # Current Architecture
 
-Student
+Frontend
 
-StudentDashboard
+Student Dashboard
 
 → Sidebar
 
@@ -140,13 +205,25 @@ StudentDashboard
 
 Admin
 
-AdminLayout
+Admin Layout
 
 → Sidebar
 
 → Topbar
 
 → Outlet
+
+Backend
+
+Routes
+
+→ Authentication Middleware
+
+→ Controllers
+
+→ Models
+
+→ MongoDB
 
 ---
 
@@ -170,50 +247,53 @@ Minimal
 
 # Coding Rules
 
-Always provide complete file replacements.
+Always provide complete file replacements for major files.
 
-Keep explanations short.
+Explain backend concepts before code.
 
-Frontend first.
+Keep frontend explanations short.
 
-Backend second.
+Test every API using Thunder Client.
 
-Commit after milestones.
+Commit after every completed milestone.
+
+Push to GitHub after every commit.
 
 ---
 
 # Backend Roadmap
 
-1. Backend Folder
+## Completed ✅
 
-2. Express Server
-
-3. MongoDB
-
+1. Express Server
+2. MongoDB Atlas
+3. Admin Authentication
 4. JWT Authentication
+5. Student CRUD
+6. Room CRUD
+7. Global Error Handling
 
-5. Student APIs
+## Remaining 🚧
 
-6. Admin APIs
-
-7. Room APIs
-
-8. Fee APIs
-
-9. Complaint APIs
-
-10. Notice APIs
-
-11. Connect Frontend
-
-12. Deployment
+8. Student ↔ Room Relationship
+9. Fee APIs
+10. Complaint APIs
+11. Notice APIs
+12. Warden APIs
+13. Dashboard Statistics APIs
+14. Image Upload (Multer)
+15. Search, Filter & Pagination
+16. Connect Frontend
+17. Deployment
 
 ---
 
 # Current Milestone
 
-Frontend Complete
+Student ↔ Room Relationship
 
 Next Step
 
-Build Backend
+Learn ObjectId, References & Populate
+
+Implement Room Assignment System
