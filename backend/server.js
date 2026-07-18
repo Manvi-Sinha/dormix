@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/db");
 const adminRoutes = require("./routes/adminRoutes");
 const studentRoutes = require("./routes/studentRoutes");
+const { errorHandler } = require("./middleware/errorMiddleware");
 
 // Load environment variables
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/admin", adminRoutes);
 app.use("/api/students", studentRoutes);
+app.use(errorHandler);
 
 // Test Route
 app.get("/", (req, res) => {
