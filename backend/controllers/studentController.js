@@ -17,7 +17,6 @@ const createStudent = asyncHandler(async (req, res) => {
     address,
   } = req.body;
 
-  // Check if room exists
   const selectedRoom = await Room.findById(room);
 
   if (!selectedRoom) {
@@ -25,7 +24,6 @@ const createStudent = asyncHandler(async (req, res) => {
     throw new Error("Room not found");
   }
 
-  // Check if room is full
   if (selectedRoom.occupied >= selectedRoom.capacity) {
     res.status(400);
     throw new Error("Room is already full");
@@ -44,15 +42,11 @@ const createStudent = asyncHandler(async (req, res) => {
     address,
   });
 
-  // Increase occupied count
   selectedRoom.occupied += 1;
-
-  // Update room status
-  if (selectedRoom.occupied >= selectedRoom.capacity) {
-    selectedRoom.status = "Full";
-  } else {
-    selectedRoom.status = "Available";
-  }
+  selectedRoom.status =
+    selectedRoom.occupied >= selectedRoom.capacity
+      ? "Full"
+      : "Available";
 
   await selectedRoom.save();
 
@@ -74,7 +68,7 @@ const getStudents = asyncHandler(async (req, res) => {
   });
 });
 
-// Get Single Student By ID
+// Get Single Student
 const getStudentById = asyncHandler(async (req, res) => {
   const student = await Student.findById(req.params.id).populate("room");
 
@@ -91,20 +85,53 @@ const getStudentById = asyncHandler(async (req, res) => {
 
 // Update Student
 const updateStudent = asyncHandler(async (req, res) => {
-  const student = await Student.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  }).populate("room");
+  const student = await Student.findById(req.params.id);
 
   if (!student) {
     res.status(404);
     throw new Error("Student not found");
   }
 
+  // Room changed
+  if (req.body.room && req.body.room !== student.room?.toString()) {
+    const oldRoom = await Room.findById(student.room);
+    const newRoom = await Room.findById(req.body.room);
+
+    if (!newRoom) {
+      res.status(404);
+      throw new Error("New room not found");
+    }
+
+    if (newRoom.occupied >= newRoom.capacity) {
+      res.status(400);
+      throw new Error("New room is already full");
+    }
+
+    // Remove from old room
+    if (oldRoom) {
+      oldRoom.occupied = Math.max(0, oldRoom.occupied - 1);
+      oldRoom.status =
+        oldRoom.occupied >= oldRoom.capacity ? "Full" : "Available";
+      await oldRoom.save();
+    }
+
+    // Add to new room
+    newRoom.occupied += 1;
+    newRoom.status =
+      newRoom.occupied >= newRoom.capacity ? "Full" : "Available";
+    await newRoom.save();
+  }
+
+  Object.assign(student, req.body);
+
+  await student.save();
+
+  const updatedStudent = await Student.findById(student._id).populate("room");
+
   res.status(200).json({
     success: true,
     message: "Student updated successfully",
-    student,
+    student: updatedStudent,
   });
 });
 
@@ -117,16 +144,13 @@ const deleteStudent = asyncHandler(async (req, res) => {
     throw new Error("Student not found");
   }
 
-  // Reduce occupied count
   if (student.room) {
     const room = await Room.findById(student.room);
 
     if (room) {
       room.occupied = Math.max(0, room.occupied - 1);
-
-      if (room.occupied < room.capacity) {
-        room.status = "Available";
-      }
+      room.status =
+        room.occupied >= room.capacity ? "Full" : "Available";
 
       await room.save();
     }
