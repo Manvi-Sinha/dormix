@@ -29,18 +29,29 @@ const createFee = asyncHandler(async (req, res) => {
 
 // Get All Fees
 const getFees = asyncHandler(async (req, res) => {
-  const fees = await Fee.find().populate("student");
+  const fees = await Fee.find().populate({
+    path: "student",
+    populate: {
+      path: "room",
+      select: "roomNumber",
+    },
+  });
 
   res.status(200).json({
     success: true,
-    count: fees.length,
     fees,
   });
 });
 
 // Get Single Fee
 const getFeeById = asyncHandler(async (req, res) => {
-  const fee = await Fee.findById(req.params.id).populate("student");
+  const fee = await Fee.findById(req.params.id).populate({
+    path: "student",
+    populate: {
+      path: "room",
+      select: "roomNumber",
+    },
+  });
 
   if (!fee) {
     res.status(404);
@@ -58,7 +69,13 @@ const updateFee = asyncHandler(async (req, res) => {
   const fee = await Fee.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
-  }).populate("student");
+  }).populate({
+    path: "student",
+    populate: {
+      path: "room",
+      select: "roomNumber",
+    },
+  });
 
   if (!fee) {
     res.status(404);
