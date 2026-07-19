@@ -1,4 +1,5 @@
 const Room = require("../models/Room");
+const Student = require("../models/Student");
 const asyncHandler = require("../middleware/asyncHandler");
 
 // Create Room
@@ -86,12 +87,25 @@ const updateRoom = asyncHandler(async (req, res) => {
 
 // Delete Room
 const deleteRoom = asyncHandler(async (req, res) => {
-  const room = await Room.findByIdAndDelete(req.params.id);
+  const room = await Room.findById(req.params.id);
 
   if (!room) {
     res.status(404);
     throw new Error("Room not found");
   }
+
+  const assignedStudents = await Student.countDocuments({
+    room: room._id,
+  });
+
+  if (assignedStudents > 0) {
+    res.status(400);
+    throw new Error(
+      "Cannot delete a room that has assigned students."
+    );
+  }
+
+  await room.deleteOne();
 
   res.status(200).json({
     success: true,
