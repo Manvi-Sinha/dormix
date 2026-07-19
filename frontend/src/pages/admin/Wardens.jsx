@@ -1,147 +1,292 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
-  FaUserTie,
-  FaPlus,
-  FaSearch,
-  FaPhone,
-  FaEnvelope,
-  FaEdit,
-  FaTrash,
-} from "react-icons/fa";
+  Eye,
+  Pencil,
+  Trash2,
+  Plus,
+  Search,
+} from "lucide-react";
 
-const wardens = [
-  {
-    id: 1,
-    name: "Mr. Rajesh Kumar",
-    hostel: "Block A",
-    phone: "9876543210",
-    email: "rajesh@dormix.com",
-  },
-  {
-    id: 2,
-    name: "Mrs. Anita Sharma",
-    hostel: "Block B",
-    phone: "9876501234",
-    email: "anita@dormix.com",
-  },
-  {
-    id: 3,
-    name: "Mr. Vivek Singh",
-    hostel: "Block C",
-    phone: "9988776655",
-    email: "vivek@dormix.com",
-  },
-  {
-    id: 4,
-    name: "Mrs. Neha Verma",
-    hostel: "Girls Hostel",
-    phone: "9123456789",
-    email: "neha@dormix.com",
-  },
-];
+import {
+  getWardens,
+  deleteWarden,
+} from "../../api/wardenApi";
+
+import AddWardenModal from "../../components/wardens/AddWardenModal";
+import ViewWardenModal from "../../components/wardens/ViewWardenModal";
 
 function Wardens() {
+  const [wardens, setWardens] = useState([]);
+  const [loading, setLoading] = useState(true);
+
   const [search, setSearch] = useState("");
 
-  const filteredWardens = wardens.filter(
-    (warden) =>
-      warden.name.toLowerCase().includes(search.toLowerCase()) ||
-      warden.hostel.toLowerCase().includes(search.toLowerCase())
-  );
+  const [showAddModal, setShowAddModal] =
+    useState(false);
 
-  return (
-    <div className="space-y-6">
-      {/* Header */}
+  const [showViewModal, setShowViewModal] =
+    useState(false);
 
-      <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-800">
-            Wardens
+  const [selectedWarden, setSelectedWarden] =
+    useState(null);
+
+  const [editWarden, setEditWarden] =
+    useState(null);
+
+  useEffect(() => {
+    fetchWardens();
+  }, []);
+
+  const fetchWardens = async () => {
+    try {
+      setLoading(true);
+      const data = await getWardens();
+      setWardens(data);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to load wardens.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleView = (warden) => {
+    setSelectedWarden(warden);
+    setShowViewModal(true);
+  };
+
+  const handleEdit = (warden) => {
+    setEditWarden(warden);
+    setShowAddModal(true);
+  };
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Delete this warden?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteWarden(id);
+      fetchWardens();
+    } catch (err) {
+      alert(
+        err.response?.data?.message ||
+          "Failed to delete warden."
+      );
+    }
+  };
+
+  const filteredWardens = useMemo(() => {
+    return wardens.filter((warden) => {
+      const keyword = search.toLowerCase();
+
+      return (
+        warden.name
+          ?.toLowerCase()
+          .includes(keyword) ||
+        warden.email
+          ?.toLowerCase()
+          .includes(keyword) ||
+        warden.phone
+          ?.toLowerCase()
+          .includes(keyword) ||
+        warden.block
+          ?.toLowerCase()
+          .includes(keyword)
+      );
+    });
+  }, [search, wardens]);
+
+  const formatDate = (date) => {
+    if (!date) return "-";
+
+    return new Date(date).toLocaleDateString(
+      "en-IN",
+      {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }
+    );
+  };
+    return (
+    <>
+      <div className="p-6">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6">
+          <h1 className="text-3xl font-bold">
+            Warden Management
           </h1>
 
-          <p className="text-slate-500 mt-1">
-            Manage hostel wardens.
-          </p>
+          <button
+            onClick={() => {
+              setEditWarden(null);
+              setShowAddModal(true);
+            }}
+            className="flex items-center gap-2 bg-[#C8D9E6] hover:bg-blue-100 px-5 py-3 rounded-xl font-semibold transition"
+          >
+            <Plus size={20} />
+            Add Warden
+          </button>
         </div>
 
-        <button className="flex items-center gap-2 bg-[#C8D9E6] hover:bg-blue-100 px-5 py-3 rounded-xl font-medium transition">
-          <FaPlus />
-          Add Warden
-        </button>
-      </div>
-
-      {/* Search */}
-
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-5">
-        <div className="relative max-w-md">
-          <FaSearch className="absolute left-4 top-4 text-slate-400" />
+        <div className="relative mb-6">
+          <Search
+            size={18}
+            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+          />
 
           <input
+            type="text"
+            placeholder="Search by name, email, phone or block..."
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search wardens..."
-            className="w-full pl-11 pr-4 py-3 border rounded-xl focus:outline-none focus:ring-2 focus:ring-[#C8D9E6]"
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
+            className="w-full border rounded-xl pl-11 pr-4 py-3"
           />
+        </div>
+
+        <div className="bg-white rounded-2xl shadow overflow-x-auto">
+          <table className="w-full">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="text-left p-4">Name</th>
+                <th className="text-left p-4">Email</th>
+                <th className="text-left p-4">Phone</th>
+                <th className="text-left p-4">Block</th>
+                <th className="text-left p-4">
+                  Joining Date
+                </th>
+                <th className="text-left p-4">
+                  Status
+                </th>
+                <th className="text-center p-4">
+                  Actions
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {loading ? (
+                <tr>
+                  <td
+                    colSpan="7"
+                    className="text-center py-10"
+                  >
+                    Loading...
+                  </td>
+                </tr>
+              ) : filteredWardens.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan="7"
+                    className="text-center py-10"
+                  >
+                    No wardens found.
+                  </td>
+                </tr>
+              ) : (
+                filteredWardens.map((warden) => (
+                  <tr
+                    key={warden._id}
+                    className="border-t hover:bg-gray-50"
+                  >
+                    <td className="p-4">
+                      {warden.name}
+                    </td>
+
+                    <td className="p-4">
+                      {warden.email}
+                    </td>
+
+                    <td className="p-4">
+                      {warden.phone}
+                    </td>
+
+                    <td className="p-4">
+                      {warden.block}
+                    </td>
+
+                    <td className="p-4">
+                      {formatDate(
+                        warden.joiningDate
+                      )}
+                    </td>
+
+                    <td className="p-4">
+                      <span
+                        className={`px-3 py-1 rounded-full text-sm font-medium ${
+                          warden.status ===
+                          "Active"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {warden.status}
+                      </span>
+                    </td>
+
+                    <td className="p-4">
+                      <div className="flex justify-center gap-3">
+                        <button
+                          onClick={() =>
+                            handleView(warden)
+                          }
+                          className="text-blue-600 hover:text-blue-800"
+                        >
+                          <Eye size={18} />
+                        </button>
+
+                        <button
+                          onClick={() =>
+                            handleEdit(warden)
+                          }
+                          className="text-yellow-600 hover:text-yellow-700"
+                        >
+                          <Pencil size={18} />
+                        </button>
+
+                        <button
+                          onClick={() =>
+                            handleDelete(
+                              warden._id
+                            )
+                          }
+                          className="text-red-600 hover:text-red-700"
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
 
-      {/* Cards */}
+      <AddWardenModal
+        open={showAddModal}
+        onClose={() => {
+          setShowAddModal(false);
+          setEditWarden(null);
+        }}
+        onSuccess={fetchWardens}
+        editWarden={editWarden}
+      />
 
-      <div className="grid lg:grid-cols-2 gap-5">
-        {filteredWardens.map((warden) => (
-          <div
-            key={warden.id}
-            className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6"
-          >
-            <div className="flex justify-between items-start">
-              <div className="flex gap-4">
-                <div className="w-14 h-14 rounded-xl bg-[#C8D9E6] flex items-center justify-center text-blue-700 text-xl">
-                  <FaUserTie />
-                </div>
-
-                <div>
-                  <h2 className="font-semibold text-lg text-slate-800">
-                    {warden.name}
-                  </h2>
-
-                  <p className="text-slate-500">
-                    {warden.hostel}
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex gap-2">
-                <button className="w-9 h-9 rounded-lg bg-yellow-100 hover:bg-yellow-200 text-yellow-700 flex items-center justify-center">
-                  <FaEdit />
-                </button>
-
-                <button className="w-9 h-9 rounded-lg bg-red-100 hover:bg-red-200 text-red-600 flex items-center justify-center">
-                  <FaTrash />
-                </button>
-              </div>
-            </div>
-
-            <div className="mt-6 space-y-3 text-sm">
-              <div className="flex items-center gap-3 text-slate-600">
-                <FaPhone />
-                {warden.phone}
-              </div>
-
-              <div className="flex items-center gap-3 text-slate-600">
-                <FaEnvelope />
-                {warden.email}
-              </div>
-            </div>
-          </div>
-        ))}
-
-        {filteredWardens.length === 0 && (
-          <div className="col-span-full bg-white rounded-2xl p-10 text-center text-slate-500">
-            No wardens found.
-          </div>
-        )}
-      </div>
-    </div>
+      <ViewWardenModal
+        open={showViewModal}
+        onClose={() => {
+          setShowViewModal(false);
+          setSelectedWarden(null);
+        }}
+        warden={selectedWarden}
+      />
+    </>
   );
 }
 
