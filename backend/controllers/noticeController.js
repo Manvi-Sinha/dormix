@@ -4,20 +4,13 @@ const asyncHandler = require("../middleware/asyncHandler");
 
 // Create Notice
 const createNotice = asyncHandler(async (req, res) => {
-  const { title, description, audience, createdBy } = req.body;
-
-  const adminExists = await Admin.findById(createdBy);
-
-  if (!adminExists) {
-    res.status(404);
-    throw new Error("Admin not found");
-  }
+  const { title, description, audience } = req.body;
 
   const notice = await Notice.create({
     title,
     description,
     audience,
-    createdBy,
+    createdBy: req.admin._id,
   });
 
   res.status(201).json({
