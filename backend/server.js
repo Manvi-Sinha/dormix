@@ -11,6 +11,7 @@ const feeRoutes = require("./routes/feeRoutes");
 const complaintRoutes = require("./routes/complaintRoutes");
 const noticeRoutes = require("./routes/noticeRoutes");
 const wardenRoutes = require("./routes/wardenRoutes");
+const dashboardRoutes = require("./routes/dashboardRoutes");
 
 const { errorHandler } = require("./middleware/errorMiddleware");
 
@@ -35,6 +36,7 @@ app.use("/api/fees", feeRoutes);
 app.use("/api/complaints", complaintRoutes);
 app.use("/api/notices", noticeRoutes);
 app.use("/api/wardens", wardenRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 
 // Test Route
 app.get("/", (req, res) => {
