@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   FaSearch,
   FaPlus,
@@ -7,61 +7,117 @@ import {
   FaEye,
 } from "react-icons/fa";
 
-const studentData = [
-  {
-    id: 1,
-    name: "Rahul Sharma",
-    room: "A-203",
-    phone: "9876543210",
-    course: "B.Tech",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Anjali Verma",
-    room: "B-110",
-    phone: "9123456780",
-    course: "MBA",
-    status: "Active",
-  },
-  {
-    id: 3,
-    name: "Rohit Singh",
-    room: "C-102",
-    phone: "9988776655",
-    course: "BCA",
-    status: "Inactive",
-  },
-  {
-    id: 4,
-    name: "Priya Gupta",
-    room: "A-108",
-    phone: "9876512345",
-    course: "MCA",
-    status: "Active",
-  },
-  {
-    id: 5,
-    name: "Aman Yadav",
-    room: "D-205",
-    phone: "9012345678",
-    course: "B.Com",
-    status: "Active",
-  },
-];
+import {
+  getStudents,
+  deleteStudent,
+} from "../../api/studentApi";
+
+import AddStudentModal from "../../components/admin/AddStudentModal";
+import ViewStudentModal from "../../components/admin/ViewStudentModal";
 
 function Students() {
+  const [students, setStudents] = useState([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-  const filteredStudents = studentData.filter(
-    (student) =>
-      student.name.toLowerCase().includes(search.toLowerCase()) ||
-      student.room.toLowerCase().includes(search.toLowerCase()) ||
-      student.course.toLowerCase().includes(search.toLowerCase())
-  );
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+
+  const [viewModal, setViewModal] = useState(false);
+  const [viewStudent, setViewStudent] = useState(null);
+
+  useEffect(() => {
+    fetchStudents();
+  }, []);
+
+  const fetchStudents = async () => {
+    try {
+      setLoading(true);
+      const data = await getStudents();
+      setStudents(data);
+    } catch (err) {
+      setError(
+        err.response?.data?.message ||
+          "Failed to load students."
+      );
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this student?"
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await deleteStudent(id);
+      fetchStudents();
+    } catch (err) {
+      alert(
+        err.response?.data?.message ||
+          "Failed to delete student."
+      );
+    }
+  };
+
+  const filteredStudents = students.filter((student) => {
+    const roomNumber = student.room?.roomNumber || "";
+
+    return (
+      student.name
+        .toLowerCase()
+        .includes(search.toLowerCase()) ||
+      roomNumber
+        .toLowerCase()
+        .includes(search.toLowerCase()) ||
+      student.course
+        .toLowerCase()
+        .includes(search.toLowerCase())
+    );
+  });
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-80 text-lg font-semibold">
+        Loading students...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-red-100 text-red-700 border border-red-300 rounded-xl p-4">
+        {error}
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
+
+      <AddStudentModal
+        open={openModal}
+        editStudent={selectedStudent}
+        onClose={() => {
+          setOpenModal(false);
+          setSelectedStudent(null);
+        }}
+        onSuccess={fetchStudents}
+      />
+
+      <ViewStudentModal
+        open={viewModal}
+        student={viewStudent}
+        onClose={() => {
+          setViewModal(false);
+          setViewStudent(null);
+        }}
+      />
+
       {/* Header */}
 
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -76,10 +132,17 @@ function Students() {
           </p>
         </div>
 
-        <button className="flex items-center gap-2 bg-[#C8D9E6] hover:bg-blue-100 transition px-5 py-3 rounded-xl font-medium">
+        <button
+          onClick={() => {
+            setSelectedStudent(null);
+            setOpenModal(true);
+          }}
+          className="flex items-center gap-2 bg-[#C8D9E6] hover:bg-blue-100 transition px-5 py-3 rounded-xl font-medium"
+        >
           <FaPlus />
           Add Student
         </button>
+
       </div>
 
       {/* Search */}
@@ -111,18 +174,14 @@ function Students() {
           <table className="w-full text-sm">
 
             <thead className="bg-slate-50">
-
               <tr>
-
                 <th className="text-left p-4">Student</th>
                 <th className="text-left p-4">Room</th>
                 <th className="text-left p-4">Phone</th>
                 <th className="text-left p-4">Course</th>
                 <th className="text-left p-4">Status</th>
                 <th className="text-center p-4">Actions</th>
-
               </tr>
-
             </thead>
 
             <tbody>
@@ -130,7 +189,7 @@ function Students() {
               {filteredStudents.map((student) => (
 
                 <tr
-                  key={student.id}
+                  key={student._id}
                   className="border-t hover:bg-slate-50"
                 >
 
@@ -139,7 +198,8 @@ function Students() {
                   </td>
 
                   <td className="p-4">
-                    {student.room}
+                    {student.room?.roomNumber ||
+                      "Not Assigned"}
                   </td>
 
                   <td className="p-4">
@@ -151,7 +211,6 @@ function Students() {
                   </td>
 
                   <td className="p-4">
-
                     <span
                       className={`px-3 py-1 rounded-full text-xs font-medium ${
                         student.status === "Active"
@@ -161,22 +220,38 @@ function Students() {
                     >
                       {student.status}
                     </span>
-
                   </td>
 
                   <td className="p-4">
 
                     <div className="flex justify-center gap-2">
 
-                      <button className="w-9 h-9 rounded-lg bg-[#C8D9E6] hover:bg-blue-100 flex items-center justify-center">
+                      <button
+                        onClick={() => {
+                          setViewStudent(student);
+                          setViewModal(true);
+                        }}
+                        className="w-9 h-9 rounded-lg bg-[#C8D9E6] hover:bg-blue-100 flex items-center justify-center"
+                      >
                         <FaEye />
                       </button>
 
-                      <button className="w-9 h-9 rounded-lg bg-yellow-100 hover:bg-yellow-200 flex items-center justify-center text-yellow-700">
+                      <button
+                        onClick={() => {
+                          setSelectedStudent(student);
+                          setOpenModal(true);
+                        }}
+                        className="w-9 h-9 rounded-lg bg-yellow-100 hover:bg-yellow-200 flex items-center justify-center text-yellow-700"
+                      >
                         <FaEdit />
                       </button>
 
-                      <button className="w-9 h-9 rounded-lg bg-red-100 hover:bg-red-200 flex items-center justify-center text-red-600">
+                      <button
+                        onClick={() =>
+                          handleDelete(student._id)
+                        }
+                        className="w-9 h-9 rounded-lg bg-red-100 hover:bg-red-200 flex items-center justify-center text-red-600"
+                      >
                         <FaTrash />
                       </button>
 
@@ -206,6 +281,7 @@ function Students() {
         </div>
 
       </div>
+
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   FaUserShield,
   FaEnvelope,
@@ -8,23 +8,45 @@ import {
   FaEyeSlash,
   FaArrowLeft,
 } from "react-icons/fa";
+import api from "../api/axios";
 
 function AdminLogin() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (e) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log({
-      email,
-      password,
-      remember,
-    });
+    setError("");
+    setLoading(true);
 
-    // Backend API will be connected here later
+    try {
+      const { data } = await api.post("/admin/login", {
+        email,
+        password,
+      });
+
+      localStorage.setItem("adminToken", data.token);
+
+      if (remember) {
+        localStorage.setItem("rememberAdmin", "true");
+      }
+
+      navigate("/admin-dashboard");
+    } catch (err) {
+      setError(
+        err.response?.data?.message || "Invalid email or password."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -48,17 +70,11 @@ function AdminLogin() {
           </p>
 
           <div className="mt-10 space-y-4">
-
             <div>📊 Dashboard & Analytics</div>
-
             <div>🛏 Manage Rooms & Occupancy</div>
-
             <div>👨‍🎓 Manage Students</div>
-
             <div>💰 Fee Management</div>
-
             <div>📢 Notices & Complaints</div>
-
           </div>
 
           <Link
@@ -83,6 +99,12 @@ function AdminLogin() {
             Sign in to manage your Dormix platform.
           </p>
 
+          {error && (
+            <div className="mt-6 bg-red-100 border border-red-300 text-red-700 px-4 py-3 rounded-xl">
+              {error}
+            </div>
+          )}
+
           <form
             onSubmit={handleSubmit}
             className="mt-8 space-y-6"
@@ -106,6 +128,7 @@ function AdminLogin() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full border rounded-xl pl-12 pr-4 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+                  required
                 />
 
               </div>
@@ -130,6 +153,7 @@ function AdminLogin() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full border rounded-xl pl-12 pr-12 py-3 outline-none focus:ring-2 focus:ring-blue-500"
+                  required
                 />
 
                 <button
@@ -173,9 +197,10 @@ function AdminLogin() {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition"
+              disabled={loading}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition disabled:opacity-60"
             >
-              Login
+              {loading ? "Logging in..." : "Login"}
             </button>
 
           </form>

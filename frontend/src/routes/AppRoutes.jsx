@@ -11,6 +11,8 @@ import StudentDashboard from "../pages/StudentDashboard";
 import AdminLayout from "../pages/AdminLayout";
 import NotFound from "../pages/NotFound";
 
+import ProtectedRoute from "../components/ProtectedRoute";
+
 /* Student Pages */
 
 import DashboardHome from "../pages/student/DashboardHome";
@@ -35,6 +37,7 @@ function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
+
         {/* Landing */}
 
         <Route path="/" element={<Home />} />
@@ -58,78 +61,31 @@ function AppRoutes() {
           element={<StudentDashboard />}
         >
           <Route index element={<DashboardHome />} />
-
-          <Route
-            path="room"
-            element={<Room />}
-          />
-
-          <Route
-            path="fees"
-            element={<Fees />}
-          />
-
-          <Route
-            path="complaints"
-            element={<Complaints />}
-          />
-
-          <Route
-            path="notices"
-            element={<Notices />}
-          />
-
-          <Route
-            path="profile"
-            element={<Profile />}
-          />
+          <Route path="room" element={<Room />} />
+          <Route path="fees" element={<Fees />} />
+          <Route path="complaints" element={<Complaints />} />
+          <Route path="notices" element={<Notices />} />
+          <Route path="profile" element={<Profile />} />
         </Route>
 
-        {/* Admin Dashboard */}
+        {/* Protected Admin Dashboard */}
 
         <Route
           path="/admin-dashboard"
-          element={<AdminLayout />}
+          element={
+            <ProtectedRoute>
+              <AdminLayout />
+            </ProtectedRoute>
+          }
         >
-          <Route
-            index
-            element={<AdminDashboardHome />}
-          />
-
-          <Route
-            path="students"
-            element={<Students />}
-          />
-
-          <Route
-            path="rooms"
-            element={<Rooms />}
-          />
-
-          <Route
-            path="fees"
-            element={<AdminFees />}
-          />
-
-          <Route
-            path="complaints"
-            element={<AdminComplaints />}
-          />
-
-          <Route
-            path="notices"
-            element={<AdminNotices />}
-          />
-
-          <Route
-            path="wardens"
-            element={<Wardens />}
-          />
-
-          <Route
-            path="settings"
-            element={<Settings />}
-          />
+          <Route index element={<AdminDashboardHome />} />
+          <Route path="students" element={<Students />} />
+          <Route path="rooms" element={<Rooms />} />
+          <Route path="fees" element={<AdminFees />} />
+          <Route path="complaints" element={<AdminComplaints />} />
+          <Route path="notices" element={<AdminNotices />} />
+          <Route path="wardens" element={<Wardens />} />
+          <Route path="settings" element={<Settings />} />
         </Route>
 
         {/* 404 */}
@@ -138,6 +94,7 @@ function AppRoutes() {
           path="*"
           element={<NotFound />}
         />
+
       </Routes>
     </BrowserRouter>
   );
