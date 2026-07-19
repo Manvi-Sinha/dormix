@@ -29,7 +29,13 @@ const createComplaint = asyncHandler(async (req, res) => {
 
 // Get All Complaints
 const getComplaints = asyncHandler(async (req, res) => {
-  const complaints = await Complaint.find().populate("student");
+  const complaints = await Complaint.find().populate({
+  path: "student",
+  populate: {
+    path: "room",
+    select: "roomNumber",
+  },
+});
 
   res.status(200).json({
     success: true,
@@ -40,7 +46,13 @@ const getComplaints = asyncHandler(async (req, res) => {
 
 // Get Single Complaint
 const getComplaintById = asyncHandler(async (req, res) => {
-  const complaint = await Complaint.findById(req.params.id).populate("student");
+  const complaint = await Complaint.findById(req.params.id).populate({
+  path: "student",
+  populate: {
+    path: "room",
+    select: "roomNumber",
+  },
+});
 
   if (!complaint) {
     res.status(404);
