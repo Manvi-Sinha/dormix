@@ -2,8 +2,6 @@
 
 Dormix is a modern full-stack Hostel & PG Management System built to simplify hostel administration and improve the student experience.
 
-> **Project Status:** Frontend ✅ Complete | Backend 🚧 In Progress
-
 ---
 
 # ✨ Features
@@ -57,47 +55,6 @@ Dormix is a modern full-stack Hostel & PG Management System built to simplify ho
 
 ---
 
-# 📂 Project Structure
-
-```
-Dormix/
-│
-├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── routes/
-│   └── assets/
-│
-├── public/
-├── PROJECT_CONTEXT.md
-├── README.md
-└── package.json
-```
-
----
-
-# 🚀 Getting Started
-
-## Clone the Repository
-
-```bash
-git clone <repository-url>
-```
-
-## Install Dependencies
-
-```bash
-npm install
-```
-
-## Run Development Server
-
-```bash
-npm run dev
-```
-
----
-
 # 🎨 UI Design
 
 - Clean SaaS Interface
@@ -105,38 +62,6 @@ npm run dev
 - Mobile Friendly
 - Light Theme
 - Accent Color: **#C8D9E6**
-
----
-
-# 📌 Development Roadmap
-
-### ✅ Phase 1
-
-- Frontend Development
-
-### 🚧 Phase 2
-
-- Backend Development
-- Authentication
-- MongoDB Integration
-- REST APIs
-
-### ⏳ Phase 3
-
-- Frontend & Backend Integration
-- Testing
-- Deployment
-
----
-
-# 📈 Current Progress
-
-- ✅ Landing Page
-- ✅ Student Module
-- ✅ Admin Module
-- 🚧 Backend Development
-- ⏳ API Integration
-- ⏳ Deployment
 
 ---
 
